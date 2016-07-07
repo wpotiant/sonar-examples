@@ -12,7 +12,7 @@ public class ForbiddenFunctionUseCheckTest {
 
   @Test
   public void test() throws Exception {
-    PHPCheckTest.check(new ForbiddenFunctionUseCheck(), new File("src/test/resources/checks/forbiddenFunctionUseCheck.js"));
+    PHPCheckTest.check(new ForbiddenFunctionUseCheck(), new File("src/test/resources/checks/forbiddenFunctionUseCheck.php"));
   }
 
 }

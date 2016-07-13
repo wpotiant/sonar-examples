@@ -1,7 +1,6 @@
 package org.sonar.samples.java;
 
 import java.util.Arrays;
-
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
 import org.sonar.samples.java.checks.AvoidAnnotationRule;
@@ -11,6 +10,7 @@ import org.sonar.samples.java.checks.AvoidSuperClassRule;
 import org.sonar.samples.java.checks.AvoidUnmodifiableListRule;
 import org.sonar.samples.java.checks.MyCustomSubscriptionRule;
 import org.sonar.samples.java.checks.SecurityAnnotationMandatoryRule;
+import org.sonarsource.api.sonarlint.SonarLintSide;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be executed during
@@ -18,6 +18,7 @@ import org.sonar.samples.java.checks.SecurityAnnotationMandatoryRule;
  *
  * This class is a batch extension by implementing the {@link org.sonar.plugins.java.api.CheckRegistrar} interface.
  */
+@SonarLintSide
 public class MyJavaFileCheckRegistrar implements CheckRegistrar {
 
   /**

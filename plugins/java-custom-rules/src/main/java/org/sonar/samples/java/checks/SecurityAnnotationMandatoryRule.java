@@ -1,10 +1,8 @@
 package org.sonar.samples.java.checks;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.sonar.java.model.PackageUtils;
@@ -19,13 +17,11 @@ import org.sonar.plugins.java.api.tree.MethodTree;
 import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.plugins.java.api.tree.TypeTree;
 import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
-import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
 @Rule(key = "SecurityAnnotationMandatory",
   name = "Security Annotation Mandatory",
   description = "Security Annotation Mandatory",
   tags = {"security"})
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.ARCHITECTURE_CHANGEABILITY)
 @SqaleConstantRemediation("10min")
 public class SecurityAnnotationMandatoryRule extends BaseTreeVisitor implements JavaFileScanner {
 

@@ -5,7 +5,6 @@
  */
 package org.sonar.samples.java.checks;
 
-import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.JavaFileScanner;
@@ -13,7 +12,6 @@ import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.MethodTree;
 import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
-import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
 /**
  * This class is an example of how to implement your own rules.
@@ -27,7 +25,6 @@ import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
   tags = {"stupid", "example"},
   // default severity (formerly "priority") when rule is enabled in Quality profile
   priority = Priority.MINOR)
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.ARCHITECTURE_CHANGEABILITY)
 @SqaleConstantRemediation("10min")
 /**
  * The class extends BaseTreeVisitor: the visitor for the Java AST.

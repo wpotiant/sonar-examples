@@ -7,11 +7,6 @@ The directory /projects contains sample projects for:
 
 ## SonarQube Plugins
 
-The directory /plugins contains the most frequent kinds of plugins:
- * Extensions of rule engines like Java and JavaScript
+The directory /plugins contains the most frequent kinds of custom plugins:
+ * Extensions of rule engines like Java, JavaScript and PHP
  * Define a new metric, compute measures and display them in web app
-
-## SonarQube Web Service API
-
-The directory /ws contains project samples using the SonarQube web service API.
- 

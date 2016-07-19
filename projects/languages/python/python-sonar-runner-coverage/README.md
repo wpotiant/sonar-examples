@@ -9,10 +9,13 @@ Prerequisites
 
 Tests Execution Results Generation
 ==================================
-* Run from your project root directory:
-** coverage erase
-** coverage run --branch --source=src ./src/purchase.py
-** coverage xml -i
+* Run from your project root directory: 
+```
+coverage erase
+coverage run --branch --source=src ./src/purchase.py
+coverage xml -i
+```
+
 * Path to the generated file coverage.xml is referenced in sonar-project.properties
 
 Usage

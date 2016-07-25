@@ -3,23 +3,22 @@ package org.sonarsource.plugins.example.rules;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.xml.stream.XMLStreamException;
+
 import org.apache.commons.lang.StringUtils;
-import org.sonar.api.batch.Sensor;
-import org.sonar.api.batch.SensorContext;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.component.ResourcePerspectives;
+import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.config.Settings;
-import org.sonar.api.issue.Issuable;
-import org.sonar.api.issue.Issue;
-import org.sonar.api.resources.Project;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
-
-import static java.lang.String.format;
+import org.sonarsource.plugins.example.languages.FooLanguage;
 
 /**
  * The goal of this Sensor is to load the results of an analysis performed by a fictive external tool named: FooLint
@@ -34,22 +33,20 @@ public class FooLintIssuesLoaderSensor implements Sensor {
 
   protected final Settings settings;
   protected final FileSystem fileSystem;
-  protected final RuleFinder ruleFinder;
-  protected final ResourcePerspectives perspectives;
+  protected SensorContext context;
 
   /**
    * Use of IoC to get Settings, FileSystem, RuleFinder and ResourcePerspectives
    */
-  public FooLintIssuesLoaderSensor(final Settings settings, final FileSystem fileSystem, final RuleFinder ruleFinder, final ResourcePerspectives perspectives) {
+  public FooLintIssuesLoaderSensor(final Settings settings, final FileSystem fileSystem) {
     this.settings = settings;
     this.fileSystem = fileSystem;
-    this.ruleFinder = ruleFinder;
-    this.perspectives = perspectives;
   }
 
   @Override
-  public boolean shouldExecuteOnProject(final Project project) {
-    return !StringUtils.isEmpty(getReportPath());
+  public void describe(final SensorDescriptor descriptor) {
+    descriptor.name("FooLint Issues Loader Sensor");
+    descriptor.onlyOnLanguage(FooLanguage.KEY);
   }
 
   protected String reportPathKey() {
@@ -66,14 +63,16 @@ public class FooLintIssuesLoaderSensor implements Sensor {
   }
 
   @Override
-  public void analyse(final Project project, final SensorContext context) {
-    String reportPath = getReportPath();
-    File analysisResultsFile = new File(reportPath);
-    try {
-      parseAndSaveResults(analysisResultsFile);
-
-    } catch (XMLStreamException e) {
-      throw new IllegalStateException("Unable to parse the provided FooLint file", e);
+  public void execute(final SensorContext context) {
+    if (!StringUtils.isEmpty(getReportPath())) {
+      this.context = context;
+      String reportPath = getReportPath();
+      File analysisResultsFile = new File(reportPath);
+      try {
+        parseAndSaveResults(analysisResultsFile);
+      } catch (XMLStreamException e) {
+        throw new IllegalStateException("Unable to parse the provided FooLint file", e);
+      }
     }
   }
 
@@ -86,7 +85,7 @@ public class FooLintIssuesLoaderSensor implements Sensor {
     }
   }
 
-  private void getResourceAndSaveIssue(FooLintError error) {
+  private void getResourceAndSaveIssue(final FooLintError error) {
     LOGGER.debug(error.toString());
 
     InputFile inputFile = fileSystem.inputFile(
@@ -103,33 +102,21 @@ public class FooLintIssuesLoaderSensor implements Sensor {
     }
   }
 
-  private boolean saveIssue(InputFile inputFile, int line, String externalRuleKey, String message) {
-    RuleKey rule = RuleKey.of(FooLintRulesDefinition.getRepositoryKeyForLanguage(inputFile.language()), externalRuleKey);
+  private void saveIssue(final InputFile inputFile, int line, final String externalRuleKey, final String message) {
+    RuleKey ruleKey = RuleKey.of(FooLintRulesDefinition.getRepositoryKeyForLanguage(inputFile.language()), externalRuleKey);
 
-    Issuable issuable = perspectives.as(Issuable.class, inputFile);
-    boolean result = false;
-    if (issuable != null) {
-      LOGGER.debug("Issuable is not null: %s", issuable.toString());
-      Issuable.IssueBuilder issueBuilder = issuable.newIssueBuilder()
-        .ruleKey(rule)
-        .message(message);
-      if (line > 0) {
-        LOGGER.debug("line is > 0");
-        issueBuilder = issueBuilder.line(line);
-      }
-      Issue issue = issueBuilder.build();
-      LOGGER.debug("issue == null? " + (issue == null));
-      try {
-        result = issuable.addIssue(issue);
-        LOGGER.debug("after addIssue: result={}", result);
-      } catch (org.sonar.api.utils.MessageException me) {
-        LOGGER.error(format("Can't add issue on file %s at line %d.", inputFile.absolutePath(), line), me);
-      }
+    NewIssue newIssue = context.newIssue()
+      .forRule(ruleKey);
 
-    } else {
-      LOGGER.debug("Can't find an Issuable corresponding to InputFile:" + inputFile.absolutePath());
+    NewIssueLocation primaryLocation = newIssue.newLocation()
+      .on(inputFile)
+      .message(message);
+    if (line > 0) {
+      primaryLocation.at(inputFile.selectLine(line));
     }
-    return result;
+    newIssue.at(primaryLocation);
+
+    newIssue.save();
   }
 
   @Override
@@ -195,4 +182,5 @@ public class FooLintIssuesLoaderSensor implements Sensor {
       return Arrays.asList(fooError1, fooError2);
     }
   }
+
 }

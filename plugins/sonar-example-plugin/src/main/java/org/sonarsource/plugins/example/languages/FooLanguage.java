@@ -2,6 +2,7 @@ package org.sonarsource.plugins.example.languages;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.AbstractLanguage;

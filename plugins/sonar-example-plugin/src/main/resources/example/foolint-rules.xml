@@ -10,6 +10,8 @@
 		<status>READY</status>
 		<tag>example</tag>
 		<tag>bug</tag>
+		<remediationFunction>CONSTANT_ISSUE</remediationFunction>
+        <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
 	</rule>
 	<rule>
 		<key>ExampleRule2</key>
@@ -22,6 +24,8 @@
 		<status>BETA</status>
 		<tag>example</tag>
 		<tag>convention</tag>
+        <remediationFunction>LINEAR</remediationFunction>
+        <remediationFunctionGapMultiplier>60min</remediationFunctionGapMultiplier>		
 	</rule>
 	<rule>
 		<key>ExampleRule3</key>
@@ -33,5 +37,8 @@
 		<cardinality>SINGLE</cardinality>
 		<status>DEPRECATED</status>
 		<tag>example</tag>
+	    <remediationFunction>LINEAR_OFFSET</remediationFunction>
+	    <remediationFunctionGapMultiplier>10min</remediationFunctionGapMultiplier>
+	    <remediationFunctionBaseEffort>30min</remediationFunctionBaseEffort>		
 	</rule>
 </foolint-rules>

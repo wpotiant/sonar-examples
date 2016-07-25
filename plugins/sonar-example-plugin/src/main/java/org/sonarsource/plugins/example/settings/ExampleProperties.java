@@ -1,9 +1,10 @@
 package org.sonarsource.plugins.example.settings;
 
-import java.util.List;
-import org.sonar.api.config.PropertyDefinition;
-
 import static java.util.Arrays.asList;
+
+import java.util.List;
+
+import org.sonar.api.config.PropertyDefinition;
 
 public class ExampleProperties {
 

@@ -10,7 +10,7 @@ Usage
 =====
 * Compile the project:
 
-        mvn clean install
+        gradlew install
 
 * Analyze it with SonarQube using Maven:
 

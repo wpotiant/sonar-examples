@@ -15,3 +15,7 @@ Usage
 * Analyze it with SonarQube using Maven:
 
         mvn sonar:sonar
+
+* If you want to collect unit test coverage using JaCoCo:
+
+        mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar

@@ -1,5 +1,4 @@
-#include <stdio.h> /* NOK, according to the MISRA C 2004 20.9 rule, stdio.h must not be used in embedded system's production code */
-
+#include <stdio.h>
 #include <mylib.h>
 
 /*
@@ -8,16 +7,21 @@
  */
 
 int main(void) {
+  char str[100];
   int x = ADD(40, 2);
 
   int y = fun(40, 2);
   
+  /* Code Smell: Empty block */
   if (x != 42)
-  { /* NOK, empty code blocks generate violations */
+  {
   }
 
-  printf("40 + 2 = %d\n", x);
-  printf("fun = %d\n", y);
+  if (x & 0xff) { /* Bug: Bitwise op on signed operand */
+    sprintf(str, "40 + 2 = %d\n", x); /* Vulnerability: Don't use sprintf */
+    printf("%s", str);
+    printf("fun = %d\n", y);
+  }
 }
 
 int fun(int a, int b) {

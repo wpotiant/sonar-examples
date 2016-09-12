@@ -3,9 +3,7 @@ package org.sonarsource.plugins.example.rules;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.xml.stream.XMLStreamException;
-
 import org.apache.commons.lang.StringUtils;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
@@ -103,7 +101,7 @@ public class FooLintIssuesLoaderSensor implements Sensor {
   }
 
   private void saveIssue(final InputFile inputFile, int line, final String externalRuleKey, final String message) {
-    RuleKey ruleKey = RuleKey.of(FooLintRulesDefinition.getRepositoryKeyForLanguage(inputFile.language()), externalRuleKey);
+    RuleKey ruleKey = RuleKey.of(getRepositoryKeyForLanguage(inputFile.language()), externalRuleKey);
 
     NewIssue newIssue = context.newIssue()
       .forRule(ruleKey);
@@ -117,6 +115,10 @@ public class FooLintIssuesLoaderSensor implements Sensor {
     newIssue.at(primaryLocation);
 
     newIssue.save();
+  }
+
+  private static String getRepositoryKeyForLanguage(String languageKey) {
+    return languageKey.toLowerCase() + "-" + FooLintRulesDefinition.KEY;
   }
 
   @Override

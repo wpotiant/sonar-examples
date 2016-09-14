@@ -1,20 +1,12 @@
 package org.sonar.samples.java.checks;
 
-import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.JavaFileScanner;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.MethodTree;
-import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
-import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
-@Rule(key = "AvoidBrandInMethodNames",
-  name = "Avoid Brand in Method Names",
-  description = "Avoid Brand in Method Names",
-  tags = {"company"})
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.ARCHITECTURE_CHANGEABILITY)
-@SqaleConstantRemediation("10min")
+@Rule(key = "AvoidBrandInMethodNames")
 public class AvoidBrandInMethodNamesRule extends BaseTreeVisitor implements JavaFileScanner {
 
   private JavaFileScannerContext context;
@@ -41,7 +33,7 @@ public class AvoidBrandInMethodNamesRule extends BaseTreeVisitor implements Java
 
     if (tree.simpleName().name().toUpperCase().contains(COMPANY_NAME.toUpperCase())) {
       // Adds an issue by attaching it with the tree and the rule
-      context.addIssue(tree, this, "Avoid using Brand in method name");
+      context.reportIssue(this, tree, "Avoid using Brand in method name");
     }
     // The call to the super implementation allows to continue the visit of the AST.
     // Be careful to always call this method to visit every node of the tree.

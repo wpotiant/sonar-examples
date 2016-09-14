@@ -5,23 +5,22 @@
  */
 package org.sonar.samples.java;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.sonar.api.SonarPlugin;
+import org.sonar.api.Plugin;
 
 /**
- * Entry point of plugin
+ * Entry point of your plugin containing your custom rules
  */
-public class MyJavaRulesPlugin extends SonarPlugin {
+public class MyJavaRulesPlugin implements Plugin {
 
   @Override
-  public List getExtensions() {
-    return Arrays.asList(
-      // server extensions -> objects are instantiated during server startup
-      MyJavaRulesDefinition.class,
+  public void define(Context context) {
 
-      // batch extensions -> objects are instantiated during code analysis
-      MyJavaFileCheckRegistrar.class);
+    // server extensions -> objects are instantiated during server startup
+    context.addExtension(MyJavaRulesDefinition.class);
+
+    // batch extensions -> objects are instantiated during code analysis
+    context.addExtension(MyJavaFileCheckRegistrar.class);
+
   }
+
 }

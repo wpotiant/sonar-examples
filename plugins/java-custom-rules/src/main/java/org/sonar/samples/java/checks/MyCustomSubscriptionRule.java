@@ -2,24 +2,16 @@ package org.sonar.samples.java.checks;
 
 import java.util.List;
 
-import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
 import org.sonar.plugins.java.api.semantic.Symbol.MethodSymbol;
 import org.sonar.plugins.java.api.semantic.Type;
 import org.sonar.plugins.java.api.tree.MethodTree;
 import org.sonar.plugins.java.api.tree.Tree;
-import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
-import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
 import com.google.common.collect.ImmutableList;
 
-@Rule(key = "method_with_same_type_as_arg",
-  name = "method with same return type as argument",
-  description = "This rule detects methods with same type as argument",
-  tags = {"example"})
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.ARCHITECTURE_CHANGEABILITY)
-@SqaleConstantRemediation("10min")
+@Rule(key = "AvoidMethodWithSameTypeInArgument")
 /**
  * To use subsctiption visitor, just extend the IssuableSubscriptionVisitor.
  */
@@ -46,7 +38,7 @@ public class MyCustomSubscriptionRule extends IssuableSubscriptionVisitor {
       // Verify argument type is same as return type.
       if (argType.is(returnType.fullyQualifiedName())) {
         // raise an issue on this node of the SyntaxTree
-        addIssue(tree, "message");
+        reportIssue(tree, "message");
       }
     }
   }

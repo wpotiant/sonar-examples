@@ -2,7 +2,6 @@ package org.sonar.samples.java.checks;
 
 import java.util.List;
 
-import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.sonar.plugins.java.api.JavaFileScanner;
@@ -12,15 +11,8 @@ import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.IdentifierTree;
 import org.sonar.plugins.java.api.tree.MethodTree;
 import org.sonar.plugins.java.api.tree.Tree;
-import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
-import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
-@Rule(key = "AvoidAnnotation",
-  name = "Avoid usage of annotation",
-  description = "This rule detects usage of configured annotation",
-  tags = {"example"})
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.ARCHITECTURE_CHANGEABILITY)
-@SqaleConstantRemediation("10min")
+@Rule(key = "AvoidAnnotation")
 public class AvoidAnnotationRule extends BaseTreeVisitor implements JavaFileScanner {
 
   private static final String DEFAULT_VALUE = "Inject";
@@ -54,7 +46,7 @@ public class AvoidAnnotationRule extends BaseTreeVisitor implements JavaFileScan
         System.out.println(idf.name());
 
         if (idf.name().equals(name)) {
-          context.addIssue(idf, this, String.format("Avoid using annotation @%s", name));
+          context.reportIssue(this, idf, String.format("Avoid using annotation @%s", name));
         }
       }
     }

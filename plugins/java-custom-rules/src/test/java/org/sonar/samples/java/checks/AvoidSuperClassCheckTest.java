@@ -3,12 +3,12 @@
  */
 package org.sonar.samples.java.checks;
 
-import org.junit.Test;
-import org.sonar.java.checks.verifier.JavaCheckVerifier;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
+import org.sonar.java.checks.verifier.JavaCheckVerifier;
 
 public class AvoidSuperClassCheckTest {
 

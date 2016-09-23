@@ -10,6 +10,7 @@ import org.sonar.samples.java.checks.AvoidSuperClassRule;
 import org.sonar.samples.java.checks.AvoidUnmodifiableListRule;
 import org.sonar.samples.java.checks.MyCustomSubscriptionRule;
 import org.sonar.samples.java.checks.SecurityAnnotationMandatoryRule;
+import org.sonar.samples.java.checks.SpringControllerRequestMappingEntityRule;
 
 import com.google.common.collect.ImmutableList;
 
@@ -24,6 +25,7 @@ public final class RulesList {
 
   public static List<Class<? extends JavaCheck>> getJavaChecks() {
     return ImmutableList.<Class<? extends JavaCheck>>builder()
+      .add(SpringControllerRequestMappingEntityRule.class)
       .add(AvoidAnnotationRule.class)
       .add(AvoidBrandInMethodNamesRule.class)
       .add(AvoidMethodDeclarationRule.class)

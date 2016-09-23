@@ -14,7 +14,7 @@ class AvoidBrandInNamesCheck {
 
   }
 
-  public void methodWithMyOtherCompany() {
+  public void methodWithMyOtherCompany() { // Compliant
 
   }
 

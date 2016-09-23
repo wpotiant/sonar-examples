@@ -11,6 +11,7 @@ import org.sonar.samples.java.checks.AvoidSuperClassRule;
 import org.sonar.samples.java.checks.AvoidUnmodifiableListRule;
 import org.sonar.samples.java.checks.MyCustomSubscriptionRule;
 import org.sonar.samples.java.checks.SecurityAnnotationMandatoryRule;
+import org.sonar.samples.java.checks.SpringControllerRequestMappingEntityRule;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be executed during
@@ -34,6 +35,7 @@ public class MyJavaFileCheckRegistrar implements CheckRegistrar {
    */
   public static Class<? extends JavaCheck>[] checkClasses() {
     return new Class[] {
+      SpringControllerRequestMappingEntityRule.class,
       AvoidAnnotationRule.class,
       AvoidBrandInMethodNamesRule.class,
       AvoidMethodDeclarationRule.class,

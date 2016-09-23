@@ -1,5 +1,5 @@
 {
-  "title": "Avoid using methods",
+  "title": "Avoid method declarations",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",

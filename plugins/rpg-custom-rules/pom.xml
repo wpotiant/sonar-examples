@@ -33,14 +33,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.sonarsource.rpg</groupId>
-      <artifactId>rpg-checks-testkit</artifactId>
-      <version>${rpg.plugin.version}</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/lib/rpg-checks-testkit-${rpg.plugin.version}.jar</systemPath>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -56,6 +48,7 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>10.0.1</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

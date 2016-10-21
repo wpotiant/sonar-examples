@@ -7,7 +7,8 @@ package org.sonar.samples.php.checks;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import org.sonar.api.server.rule.RulesDefinition;
+import java.util.List;
+import java.util.Set;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.php.api.tree.Tree;
@@ -18,10 +19,6 @@ import org.sonar.plugins.php.api.tree.expression.FunctionCallTree;
 import org.sonar.plugins.php.api.visitors.PHPSubscriptionCheck;
 import org.sonar.plugins.php.api.visitors.PHPVisitorCheck;
 import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
-import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Example of implementation of a check by extending {@link PHPSubscriptionCheck}.
@@ -40,7 +37,6 @@ import java.util.Set;
 // Description can either be given in this annotation or through HTML name <ruleKey>.html located in package src/resources/org/sonar/l10n/php/rules/<repositoryKey>
 // description = "<p>The following functions should not be used:</p> <ul><li>foo</li> <li>bar</li></ul>",
   )
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.DATA_RELIABILITY)
 @SqaleConstantRemediation("5min")
 public class OtherForbiddenFunctionUseCheck extends PHPSubscriptionCheck {
 
@@ -60,7 +56,7 @@ public class OtherForbiddenFunctionUseCheck extends PHPSubscriptionCheck {
     ExpressionTree callee = ((FunctionCallTree) tree).callee();
 
     if (callee.is(Kind.NAMESPACE_NAME) && FORBIDDEN_FUNCTIONS.contains(((NamespaceNameTree) callee).qualifiedName())) {
-      context().newIssue(this, "Remove the usage of this forbidden function.").tree(tree);
+      context().newIssue(this, callee, "Remove the usage of this forbidden function.");
     }
   }
 

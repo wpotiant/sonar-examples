@@ -5,21 +5,15 @@
  */
 package org.sonar.samples.php;
 
-import com.google.common.collect.ImmutableList;
-import org.sonar.api.SonarPlugin;
-
-import java.util.List;
+import org.sonar.api.Plugin;
 
 /**
  * Extension point to define a Sonar Plugin.
  */
-public class PHPCustomRulesPlugin extends SonarPlugin {
+public class PHPCustomRulesPlugin implements Plugin {
 
   @Override
-  public List getExtensions() {
-    return ImmutableList.of(
-      PHPRulesDefinition.class
-    );
+  public void define(Context context) {
+    context.addExtension(PHPRulesDefinition.class);
   }
-
 }

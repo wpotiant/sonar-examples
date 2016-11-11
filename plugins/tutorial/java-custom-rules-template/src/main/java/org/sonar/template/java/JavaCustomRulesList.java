@@ -1,10 +1,10 @@
 package org.sonar.template.java;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 import org.sonar.plugins.java.api.JavaCheck;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 public final class JavaCustomRulesList {
 

@@ -1,12 +1,12 @@
 package org.sonar.template.java;
 
-import com.google.common.collect.Iterables;
+import java.util.List;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
 import org.sonar.plugins.java.Java;
 
-import java.util.List;
+import com.google.common.collect.Iterables;
 
 /**
  * Declare rule metadata in server repository of rules. 

@@ -1,9 +1,9 @@
 package org.sonar.template.java;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 public class JavaCustomRulesDefinitionTest {
 

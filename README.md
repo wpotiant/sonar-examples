@@ -17,3 +17,9 @@ The directory '/projects' contains sample projects for:
 The directory '/plugins' contains the most frequent kinds of custom plugins:
  * Custom Rules for Java, JavaScript and PHP Analyzers
  * New metric, computation of high level measures, post jobs
+
+### License
+
+Copyright 2008-2016 SonarSource.
+
+Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)

@@ -23,3 +23,8 @@ The directory '/plugins' contains the most frequent kinds of custom plugins:
 Copyright 2008-2016 SonarSource.
 
 Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)
+### License
+
+Copyright project.inceptionYear-2017 SonarSource.
+
+Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)
